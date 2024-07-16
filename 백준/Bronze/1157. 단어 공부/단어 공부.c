@@ -1,39 +1,40 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
+#include <string.h>
 #include <ctype.h>
 #define MAX 1000001
-
 int main(void) {
-    char s[MAX];
-    int count[26] = { 0 };  // 알파벳 개수는 26개
-    scanf("%s", s);
+	char s[MAX];
+	int count[26] = { 0, };
+	scanf("%s", s);
+	int M_index = 0;
+	
 
-    int i = 0;
-    while (s[i] != '\0') {
-        s[i] = toupper(s[i]);
-        count[s[i] - 'A']++;
-        i++;
-    }
+	for (int i = 0; s[i] != '\0'; i++) {
+		
+		s[i] = toupper(s[i]);
+		count[s[i] - 'A'] += 1;
 
-    int max_index = 0;
-    int max_count = 0;
-    int duple = 0;
+	}
+	
+	int duple = 0;
 
-    for (i = 0; i < 26; i++) {
-        if (count[i] > max_count) {
-            max_count = count[i];
-            max_index = i;
-            duple = 0;
-        } else if (count[i] == max_count) {
-            duple = 1;
-        }
-    }
+	for (int i = 1; i < 26; i++) {
+		if (count[M_index] < count[i]) {
+			M_index = i;
+			duple = 0;
+		}
+		else if (count[M_index] == count[i]) {
+			duple = 1;
+		}
 
-    if (duple == 0) {
-        printf("%c", max_index + 'A');
-    } else {
-        printf("?");
-    }
+	}
+	
+	if (duple == 0) {
+		printf("%c", M_index + 'A');
+	}
+	else {
+		printf("?");
+	}
 
-    return 0;
 }
